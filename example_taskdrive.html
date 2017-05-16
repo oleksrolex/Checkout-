@@ -208,47 +208,6 @@
 
 	<div style="text-align: center; font-size:17px; font-weight: bold; margin-bottom:50px;">Copyright © 2017 · <a id="link-2299-423" class="" href="mailto:hello@taskdrive.com" target="_parent">hello@taskdrive.com</a>· Made with ♡ in San Francisco & Spain</div>
 
-<script>
-var fearGenerated = function (numPeeps, rainInInches, numSharks) {
-    var rainFear = numPeeps * rainInInches;
-    var sharkFear = numSharks * numSharks * numSharks;
-    var totalFear = sharkFear + rainFear;
-    return totalFear;
-};
-var people= 10;
-var rain = 11;
-var sharks = 3;
-var fear = fearGenerated (people,rain,sharks);
-
-
-var message;
-
-	if (fear < 200){
-	message = function () {
-		return confirm( "Fear Level: LOW \n"+ "Should be no problem at all...mwahaha. \n" + "Still wanna ride?");
-		
-	};
-	}
-	else if (fear <= 300){
-		message = function () {
-		return confirm( "Fear Level: medium /n"+ "You may want to rethink this one, man. MWAHAHA! /n" + "Think you'll make it??");
-	};
-	}
-	else {
-		message = function () {
-		return confirm( "Fear Level: high /n"+ "ABANDON ALL HOPE!!. MWAHAHA! /n" + "Have a death wish???");
-	}
-	
-	};
-
-var answer = confirmRide(message);
-
-function confirmRide(test){
-return test();
-}
-
-
-	</script>
 
 
 </body></html>
