@@ -8,11 +8,12 @@
 <link rel="stylesheet" href="files/style.css">
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
   </head>
   	<body>
 		<br>
-		<form method="post" action="#" class="round form validateForm uniformForm" id="signupform" novalidate="novalidate" _lpchecked="1">
+		<form method="post" action="/thx.html" class="round form validateForm uniformForm" id="signupform" novalidate="novalidate" _lpchecked="1">
 		<div id="main-container" class="container">
 									<img class="logo" src="files/logo_medium.png">
 								<div class="clearfix"></div>
@@ -26,63 +27,54 @@
 							<div class="panel-body">
 								<div class="form-group">
 								<div class="productdescription col-sm-8">
-									<h5><input name="purchase[product_id]" type="radio"><b>  Full-Time Researchers</b> $380</h5>
+									<h5><b>  Full-Time Researchers</b> $380</h5>
 									<p>(40h / week, charged weekly; 1st Researcher at $380, all additional Researchers at $280 per week)</p>
 									<br>
 								</div>
 								<div class="quantitysection col-sm-4">
 										<label class="text-uppercase qty"><b>Quantity</b></label>
 										 <br>
-										<input name="quantity" class="form-control validate" id="package_quantity" value="1" type="text">
+										<input name="quantity" class="form-control validate" id="package_quantity" value="0" >
 										
 									</div>	
 								<div class="form-group">
 								<div class="productdescription col-sm-8">
-									<h5><input name="purchase[product_id]" type="radio"><b>  25 Custom Leads</b> $5</h5>
+									<h5><b>  25 Custom Leads</b> $5</h5>
 									<p>one time charge</p>
 									<br>
 								</div>
 									<div class="quantitysection col-sm-4">
 										<label class="text-uppercase qty"><b>Quantity</b></label>
 										<br>
-										<input name="package[quantity]" class="form-control validate[required]" id="package_quantity" value="0" type="text">
+										<input name="package[quantity]" class="secondPackage" id="package_quantity2" value="0" >
 										<br>
 										<label class="text-uppercase price"><b>Price per week</b></label> 
 										<!-- This field should show the automatically calculated price and shouldn't be editable -->
-										<input type="text" name="total" id="totalsum" class="form-control" >
+										<span type="text" name="total" id="totalsum" class="form-control" ></span>
 										<script>
-												function getValues(){
-												var numVal1=parseInt(document.getElementById("package_quantity").value);
+											$(document).ready(function() {
+											$('.secondPackage').on('keyup', function(){
+												var number = +$(this).val();
+												var amount = 5;
+												var finalprice = number*amount;
+												$('#totalsum').text(finalprice);
+											});
+												$('#package_quantity').on('keyup', function(){
+												var number = +$(this).val();
+												var amount = 280;
+												var finalprice = number*amount;
+												if (number == 1){
+												finalprice = 380}
+												else if (number == 0){
+												finalprice = 0}
+												else {
+												finalprice = 380 + (number-1)*280
+												}
+												return $('#totalsum').text(finalprice);
+											});
+											});	
+												
 
-												if (numVal1= 1) {
-												var totalValue = 380;
-												show("totalsum") = totalValue;
-												}
-												else {
-												var totalValue = 280*numVal1+380;
-												show("totalsum") = totalValue;	
-												}
-												}
-												
-												
-												function calculateText(){
-												var price;
-												if (numVal1= 1) {
-												var totalValue = 380;
-												var priceSplit = price.split("$");
-												var realprice = parseFloat(priceSplit[1]);
-												var quantity = document.getElementById("package_quantity")[0].value;
-												alert(realprice*quantity);
-												}
-												else {
-												var totalValue = 280*numVal1+380;
-												var priceSplit = price.split("$");
-												var realprice = parseFloat(priceSplit[1]);
-												var quantity = document.getElementById("package_quantity")[0].value;
-												alert(realprice*quantity);	
-												}
-												
-}
 										</script>
 									</div>
 								</div>
@@ -103,7 +95,8 @@
 						<div class="panel-body">
 							<div class="form-group">
 									<label class="text-uppercase" for="user[email]">Your Email</label>
-									<input type="text" class="form-control" name="email-address" id="email-address" placeholder="Email Address">
+									<input type="text" class="form-control" name="email" id="email-address" placeholder="Email Address" data-validation="email">
+									
 							</div>
 							<div id="cc" class="paymethod" style="" data-name="Credit Card">
 								<div class="row">
@@ -111,8 +104,8 @@
 										<div class="form-group">
 											<label for="cardNumber">CREDIT CARD NUMBER</label>
 											<div class="input-group">
-												<input type="text" class="form-control" name="card-number" id="card-number" placeholder="Debit/Credit Card Number">
-												<span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+												<input type="text" class="form-control" name="card-number" id="card-number" placeholder="Debit/Credit Card Number" data-validation="creditcard" data-validation-allowing="visa,mastercard">
+												
 											</div>
 										</div>
 									</div>
@@ -123,17 +116,17 @@
 											<label for="expMonth">EXPIRATION MONTH/YEAR</label>
 											<br>
 											<div class="col-xs-6 col-md-3 pl-ziro">
-												<input class="form-control" name="creditcard[expdate_month]" id="creditcard_expdate_month" placeholder="MM" autocomplete="off" required="" aria-required="true" type="text">
+												<input class="form-control" name="creditcard_month" id="creditcard_expdate_month" placeholder="MM" autocomplete="off" required="" type="text" data-validation="date" data-validation-format="mm"  >
 											</div>
 											<div class="col-xs-6 col-md-3 pl-ziro">
-												<input class="form-control" name="creditcard[expdate_year]" id="creditcard_expdate_year" placeholder="YY" autocomplete="off" required="" aria-required="true" type="text">
+												<input class="form-control" name="creditcard_year" id="creditcard_expdate_year" placeholder="YY" autocomplete="off" required="" type="text" data-validation="date" data-validation-format="yy" >
 											</div>
 										</div>
 									</div>
 									<div class="col-xs-4 col-md-3">
 										<div class="form-group">
 											<label for="cvCode">CVV/CSC CODE</label>
-											<input type="text" class="form-control" name="cvv" id="cvv" placeholder="CVV">
+											<input type="text" class="form-control" name="cvv" id="cvv" placeholder="CVV" data-validation="cvv">
 										</div>
 									</div>
 								</div>
@@ -161,22 +154,15 @@
 									<div class="col-sm-4"></div>
 				</div>
 		</div> 
+<script src="files/form-validator/jquery.form-validator.js"></script> 
+<script src="files/form-validator/security.js"></script> 
+<script>
+  $.validate({
+    modules : 'location, date, security, file'
+    
+  });
 
-					
-					<div class="row" id="form-error">
-
-						<div class="alert alert-danger" role="alert"><span id="form-error-msg"></span></div>
-
-					</div>
-
-					<div class="row" id="form-processing">
-
-						<span>
-							Please wait... <img src="Sign%20Up_files/roller.gif">
-						</span>
-
-					</div>
-					</div>
+</script>
 					<!-- footer block -->
 					<div class="row" style="margin:0 10%;">
 						<div class="col-sm-12">
