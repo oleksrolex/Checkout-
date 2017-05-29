@@ -18,6 +18,7 @@
   "homepage": "https://github.com/oleksrolex/Checkout-#readme",
   "dependencies": {
     "express": "^4.15.3",
+    "nunjucks": "^3.0.1",
     "package": "^1.0.1"
   }
 }
