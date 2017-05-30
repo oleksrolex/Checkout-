@@ -1,21 +1,48 @@
 var express = require('express');
 var app = express();
 var nunjucks = require('nunjucks');
+var keyPublishable = process.env.PUBLISHABLE_KEY;
+var keySecret = process.env.SECRET_KEY;
 
+var app = require("express")();
+var stripe = require("stripe")("sk_test_IsMOESPs3cDfMwnSRIzeLjHK");
 
 nunjucks.configure(['views'], {
     autoescape: true,
     express: app
+});
+stripe.charges.retrieve("ch_1AOzUT4DfuHBrp8zRLL7XvNc", {
+  api_key: "sk_test_IsMOESPs3cDfMwnSRIzeLjHK"
 });
 
 app.use('/public', express.static(__dirname + '/public'));
 app.set('view engine', 'html');
 
 app.get('/', function (req, res) {
-  res.render('new1')
+  res.render('example_taskdrive')
 });
 
-app.post('/', function (req, res) {
+
+app.post("/charge", (req, res) => {
+  let amount = 500;
+
+  stripe.customers.create({
+    email: req.body.stripeEmail,
+    source: req.body.stripeToken
+  })
+  .then(customer =>
+    stripe.charges.create({
+      amount,
+      description: "Sample Charge",
+         currency: "usd",
+         customer: customer.id
+    }))
+  .then(charge => res.render("thx"));
+});
+/*
+app.listen(3000);
+
+app.post('/charge', function (req, res) {
     console.log('you made post request!');
     // connect to stripe
     // ... from stripe documentation: https://stripe.com/docs/checkout/express
@@ -25,9 +52,10 @@ app.post('/', function (req, res) {
     // res.render('thankyou');
 
     // IF failure - display error
-    res.render('new1', {error: 'this is an error'})
+  //  res.render('new1', {error: 'this is an error'})
+    res.render('thx');
 });
-
+*/
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 });
