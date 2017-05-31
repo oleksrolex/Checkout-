@@ -1,4 +1,5 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
 var nunjucks = require('nunjucks');
 var keyPublishable = process.env.PUBLISHABLE_KEY;
@@ -6,6 +7,13 @@ var keySecret = process.env.SECRET_KEY;
 
 var app = require("express")();
 var stripe = require("stripe")("sk_test_IsMOESPs3cDfMwnSRIzeLjHK");
+
+
+app.use('/public', express.static(__dirname + '/public'));
+app.set('view engine', 'html');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 nunjucks.configure(['views'], {
     autoescape: true,
@@ -15,12 +23,13 @@ stripe.charges.retrieve("ch_1AOzUT4DfuHBrp8zRLL7XvNc", {
   api_key: "sk_test_IsMOESPs3cDfMwnSRIzeLjHK"
 });
 
-app.use('/public', express.static(__dirname + '/public'));
-app.set('view engine', 'html');
-
 app.get('/', function (req, res) {
   res.render('example_taskdrive')
 });
+app.get('/thx.html', function (req, res) {
+  res.render('thx')
+});
+
 
 
 app.post("/charge", (req, res) => {
@@ -28,7 +37,7 @@ app.post("/charge", (req, res) => {
 
   stripe.customers.create({
     email: req.body.stripeEmail,
-    source: req.body.stripeToken
+    source: req.body.token
   })
   .then(customer =>
     stripe.charges.create({
@@ -57,5 +66,6 @@ app.post('/charge', function (req, res) {
 });
 */
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
+  console.log('Example app listening on port 3000!');
+
 });
