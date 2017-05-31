@@ -30,8 +30,6 @@ app.get('/thx.html', function (req, res) {
   res.render('thx')
 });
 
-
-
 app.post("/charge", (req, res) => {
   let amount = 500;
 
@@ -66,6 +64,5 @@ app.post('/charge', function (req, res) {
 });
 */
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
-
+  console.log('Example app listening on port 3000!')
 });
