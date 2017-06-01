@@ -16,8 +16,6 @@
   	<body>
 		<br>
 		<form method="post" action="/charge" class="round form validateForm uniformForm" id="payment-form">
-		
-		 
 		<div id="main-container" class="container">
 									<img class="logo" src="public/files/logo_medium.png">
 								<div class="clearfix"></div>
@@ -138,6 +136,7 @@
 										<p><img class="elIMG ximg" src="https://nodo.s3.amazonaws.com/assets/images/graphics/credit-only.png" width="100%" style="margin-top:20px;></p>
 									<div class="col-sm-4"></div>
 				</div>
+				<input type="hidden" name="stripeToken" class="token">
 		</div> 
 		<script src="public/files/form-validator/jquery.form-validator.js"></script> 
 <script src="public/files/form-validator/security.js"></script> 
@@ -219,11 +218,13 @@ cardCvcElement.mount('#card-cvc-element');
 function stripeTokenHandler(token) {
   // Insert the token ID into the form so it gets submitted to the server
   var form = document.getElementById('payment-form');
-  var hiddenInput = document.createElement('input');
-  hiddenInput.setAttribute('type', 'hidden');
-  hiddenInput.setAttribute('name', 'stripeToken');
-  hiddenInput.setAttribute('value', token.id);
-  form.appendChild(hiddenInput);
+  var hiddenInput = $(".token");
+//  hiddenInput.setAttribute('type', 'hidden');
+//  hiddenInput.setAttribute('name', 'stripeToken');
+  hiddenInput.attr('value', token.id);
+//  form.appendChild(hiddenInput);
+  
+
 
   // Submit the form
   form.submit;
@@ -267,8 +268,12 @@ $('form').on('submit',function(event){
 	$('form').remove();
 //	$('#main-container').hide().html(result).fadeIn();
 	}
-	});
+	}	);
 });
+
+
+
+
 </script>
 
 
