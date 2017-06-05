@@ -224,7 +224,7 @@ function stripeTokenHandler(token) {
   hiddenInput.attr('value', token.id);
  
 // Submit the form
-/*	$.ajax('/charge',{
+	$.ajax('/charge',{
 	type: 'POST',
 	data: $('form').serialize(),
 	success : function(result){
@@ -232,14 +232,13 @@ function stripeTokenHandler(token) {
 	$('body').html(result).fadeIn();
 	},
 	timeout: 3000,
-	error: function(status, error) {
-	alert("Error:  "+ error);
+	error: function(status, err) {
+	alert(err.message);
 	}
-	
 	}	);
-	*/
+	
 
-	var posting = $.post('/charge',$('form').serialize());
+/*	var posting = $.post('/charge',$('form').serialize());
 	
 	posting.done(function(result){
 	$('form').remove();
@@ -247,7 +246,7 @@ function stripeTokenHandler(token) {
 	});
 	posting.fail(function() {
     alert( "error: "+error );
-  });
+  });*/
 }
 
 function createToken() {
