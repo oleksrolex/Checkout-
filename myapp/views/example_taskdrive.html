@@ -29,7 +29,7 @@
 							<div class="panel-body">
 								<div class="form-group">
 								<div class="productdescription col-sm-8">
-									<h5><b>  Full-Time Researchers</b> $380</h5>
+									 <h5><b>  Full-Time Researchers</b> $380</h5>
 									<p>(40h / week, charged weekly; 1st Researcher at $380, all additional Researchers at $280 per week)</p>
 									<br>
 								</div>
@@ -59,9 +59,11 @@
 												var number = +$(this).val();
 												var amount = 5;
 												var finalprice = number*amount;
-												$('#totalsum').text(finalprice);
+												 $('#totalsum').text(finalprice);
+												
 											});
 												$('#package_quantity').on('keyup', function(){
+												
 												var number = +$(this).val();
 												var amount = 280;
 												var finalprice = number*amount;
@@ -230,9 +232,11 @@ function stripeTokenHandler(token) {
 	$('body').html(result).fadeIn();
 	},
 	timeout: 3000,
-	error: function(xhr, status, error) {
-	alert("Error:  "+ xhr.responseText);
+	error: function(status, error) {
+	console.log(xhr);
+	alert("Error:  "+ error);
 	}
+	
 	}	);
 }
 
