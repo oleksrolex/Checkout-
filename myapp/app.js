@@ -47,12 +47,12 @@ app.post("/charge", (req, res) => {
          currency: "usd",
          customer: customer.id
     }))
-	.then(charge => res.render("thx"));
-//	.then(err => res.send(err)	);
+	.then(charge => res.render("thx"))
+	.then(err => res.send(err,message))
+	.catch(err=> {  console.log(err)});
 	
   
 });
-
 /*
 app.post('/charge', function (req, res) {
     console.log('you made post request!');
