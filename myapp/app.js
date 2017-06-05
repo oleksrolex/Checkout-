@@ -31,12 +31,15 @@ app.get('/thx.html', function (req, res) {
 });
 
 app.post("/charge", (req, res) => {
+	console.log('you made post request!');
   let amount = 500;
 
   stripe.customers.create({
     email: req.body.stripeEmail,
-    source: req.body.token
+    source: req.body.stripeToken
+	
   })
+
   .then(customer =>
     stripe.charges.create({
       amount,
@@ -44,11 +47,13 @@ app.post("/charge", (req, res) => {
          currency: "usd",
          customer: customer.id
     }))
-  .then(charge => res.render("thx"));
+	.then(charge => res.render("thx"));
+//	.then(err => res.send(err)	);
+	
+  
 });
-/*
-app.listen(3000);
 
+/*
 app.post('/charge', function (req, res) {
     console.log('you made post request!');
     // connect to stripe
@@ -65,4 +70,5 @@ app.post('/charge', function (req, res) {
 */
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
+  
 });
