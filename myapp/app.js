@@ -29,8 +29,11 @@ app.get('/', function (req, res) {
 app.get('/thx.html', function (req, res) {
   res.render('thx')
 });
+app.get('/error.html', function (req, res) {
+  res.render('error')
+});
 
-app.post("/charge", (req, res) => {
+app.post("/charge", (req, res, next) => {
 	console.log('you made post request!');
   let amount = 500;
 
@@ -41,17 +44,16 @@ app.post("/charge", (req, res) => {
   })
 
   .then(customer =>
-    stripe.charges.create({
+   stripe.charges.create({
       amount,
       description: "Sample Charge",
          currency: "usd",
          customer: customer.id
     }))
 	.then(charge => res.render("thx"))
-	.then(err => res.send(err,message))
-	.catch(err=> {  console.log(err)});
-	
-  
+	.then(err => res.send(err.message))
+	.catch(err=> {  res.render('error', { error: err });});
+ 
 });
 /*
 app.post('/charge', function (req, res) {
