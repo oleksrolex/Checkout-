@@ -33,7 +33,7 @@ app.get('/error.html', function (req, res) {
   res.render('error')
 });
 
-app.post("/charge", (req, res, next) => {
+app.post("/charge", (req, res) => {
 	console.log('you made post request!');
   let amount = 500;
 
