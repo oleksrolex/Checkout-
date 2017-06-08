@@ -35,9 +35,8 @@ app.get('/error.html', function (req, res) {
 
 app.post("/charge", (req, res) => {
 	console.log('you made post request!');
-  let amount = 500;
-
-  stripe.customers.create({
+ // let amount = 500;
+   stripe.customers.create({
     email: req.body.stripeEmail,
     source: req.body.stripeToken
 	
@@ -45,7 +44,7 @@ app.post("/charge", (req, res) => {
 
   .then(function(customer){
    stripe.charges.create({
-      amount,
+      amount : req.body.amount,
       description: "Sample Charge",
          currency: "usd",
          customer: customer.id
