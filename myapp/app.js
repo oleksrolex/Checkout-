@@ -43,16 +43,23 @@ app.post("/charge", (req, res) => {
 	
   })
 
-  .then(customer =>
+  .then(function(customer){
    stripe.charges.create({
       amount,
       description: "Sample Charge",
          currency: "usd",
          customer: customer.id
-    }))
-	.then(charge => res.render("thx"))
-	.then(err => res.send(err.message))
-	.catch(err=> {  res.render('error', { error: err });});
+  })})
+
+	.then(function(charge){
+	res.render("thx")})
+	
+//	.then(function(err){
+//	res.send(err.message)})
+	
+	.catch(function(err) { 
+	res.render('error', { error: err });});
+	
  
 });
 /*
