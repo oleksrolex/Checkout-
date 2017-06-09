@@ -34,7 +34,7 @@ app.get('/error.html', function (req, res) {
 });
 
 app.post("/charge", (req, res) => {
-	console.log('you made post request!');
+	console.log('A post request is made!');
  // let amount = 500;
    stripe.customers.create({
     email: req.body.stripeEmail,
@@ -45,13 +45,13 @@ app.post("/charge", (req, res) => {
   .then(function(customer){
    stripe.charges.create({
       amount : req.body.amount,
-      description: "Sample Charge",
+      description: req.body.Plan,
          currency: "usd",
          customer: customer.id
   })})
 
 	.then(function(charge){
-	res.render("thx")})
+	res.render("thx",{ price: req.body.amount/100, Plan: req.body.Plan, count: req.body.count})})
 	
 //	.then(function(err){
 //	res.send(err.message)})
@@ -77,6 +77,6 @@ app.post('/charge', function (req, res) {
 });
 */
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
+  console.log('Checkout page is running on port 3000!')
   
 });
