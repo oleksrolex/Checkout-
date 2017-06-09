@@ -6,7 +6,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="public/files/style.css">
-<script src="https://use.fontawesome.com/c23bc101ed.js"></script>
+
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
 
@@ -22,7 +22,6 @@
 				<div class="row">
 				<div class="col-sm-10">
 						<div class="panel panel-default">
-						
 							<div class="panel-heading">
 								<h2>Select a Product or Plan</h2>
 								<h3>And let our Sales Assistants find leads for you!</h3>
@@ -30,30 +29,30 @@
 							<div class="panel-body">
 								<div class="form-group">
 								<div class="productdescription col-sm-8">
-									 <h5><b>  Full-Time Researchers</b> $380</h5>
+									 <h5><b><span class="fulltimeresearcher">  Full-Time Researcher</span></b> $380</h5>
 									<p>(40h / week, charged weekly; 1st Researcher at $380, all additional Researchers at $280 per week)</p>
 									<br>
 								</div>
 								<div class="quantitysection col-sm-4">
 										<label class="text-uppercase qty"><b>Quantity</b></label>
 										 <br>
-										<input name="quantity" class="form-control validate" id="package_quantity" value="0" >
+										<input name="fulltime" class="form-control validate" id="package_quantity" value="0" onclick="this.form.reset();">
 										
 									</div>	
 								<div class="form-group">
 								<div class="productdescription col-sm-8">
-									<h5><b>  25 Custom Leads</b> $5</h5>
+									<h5><b><span class="25customleads">  25 Custom Leads</span></b> $5</h5>
 									<p>one time charge</p>
 									<br>
 								</div>
 									<div class="quantitysection col-sm-4">
 										<label class="text-uppercase qty"><b>Quantity</b></label>
 										<br>
-										<input name="package[quantity]" class="secondPackage" id="package_quantity2" value="0" name="test" >
+										<input name="customleads" class="form-control validate secondPackage" id="package_quantity2" value="0" onclick="this.form.reset();" >
 										<br>
 										<label class="text-uppercase price"><b>Price per week</b></label> 
 										<!-- This field should show the automatically calculated price and shouldn't be editable -->
-										<span type="text" name="total" id="totalsum" class="form-control" name="stripeAmount" ></span>
+										<span name="total" id="totalsum" class="form-control" name="stripeAmount" ></span>
 										<script>
 											$(document).ready(function() {
 											$('.secondPackage').on('keyup', function(){
@@ -61,6 +60,7 @@
 												var amount = 5;
 												var finalprice = number*amount;
 												 $('#totalsum').text(finalprice);
+												 
 												
 											});
 												$('#package_quantity').on('keyup', function(){
@@ -139,10 +139,17 @@
 										<!-- <button type="submit" class="text-uppercase btn btn-primary" tabindex="3" onclick="return _chargeover_process();">Sign Up Now</button> -->
 										<button type="submit" class="btn btn-success btn-lg btn-block" id="submit">Order Now</button>
 										<div id="card-errors" class="payment-errors" role="alert"></div>
-										<p><img class="elIMG ximg" src="https://nodo.s3.amazonaws.com/assets/images/graphics/credit-only.png" width="100%" style="margin-top:20px;></p>
-									<div class="col-sm-4"></div>
+										<p><img class="elIMG ximg" src="https://nodo.s3.amazonaws.com/assets/images/graphics/credit-only.png" width="100%" style="margin-top:20px;"> </p>
+									</div>
+									<div class="col-sm-2 loading">
+									
+									</div>
 				</div>
 				<input type="hidden" name="stripeToken" class="token">
+				<input type="hidden" name="amount" class="amounttoken" value="">
+				<input type="hidden" name="Plan" class="plan" value="">
+				<input type="hidden" name="count" class="count" value="">
+				
 		</div> 
 		<script src="public/files/form-validator/jquery.form-validator.js"></script> 
 <script src="public/files/form-validator/security.js"></script> 
@@ -223,9 +230,30 @@ cardCvcElement.mount('#card-cvc-element');
 
 function stripeTokenHandler(token) {
   // Insert the token ID into the form so it gets submitted to the server
+  $('.loading').html('<img class="loader" src="public/files/ajax-loader.gif">');
+  var fullresearcherlabel = $('.fulltimeresearcher').text();
+  var customleadslabel = $('.25customleads').text();
+  var dollar = +$('#totalsum').text();
+  var finalAmount = dollar*100;
   var form = document.getElementById('payment-form');
   var hiddenInput = $(".token");
+  var hiddenInputAmount = $(".amounttoken");
+  var hiddenInputPlan = $(".plan");
+  var hiddenInputCount = $(".count");
+  
+    
   hiddenInput.attr('value', token.id);
+  hiddenInputAmount.attr('value', finalAmount);
+ var zero = $('#package_quantity').val();
+  if (zero == 0){
+   hiddenInputPlan.attr('value',customleadslabel );
+   hiddenInputCount.attr('value',$('#package_quantity2').val() );
+   
+  } else  {  
+   hiddenInputPlan.attr('value', fullresearcherlabel);
+	hiddenInputCount.attr('value',zero );
+  }
+  
  
 // Submit the form
 	$.ajax('/charge',{
@@ -234,24 +262,15 @@ function stripeTokenHandler(token) {
 	success : function(result){
 	$('form').remove();
 	$('body').html(result).fadeIn();
+//	$('#loading').hide();
 	},
 	timeout: 3000,
 	error: function(result) {
 	$('body').html(result).fadeIn();
-//	console.log(err.message);
+	$('#loading').hide();
 	}
 	}	);
 	
-
-/*	var posting = $.post('/charge',$('form').serialize());
-	
-	posting.done(function(result){
-	$('form').remove();
-	$('body').html(result).fadeIn();
-	});
-	posting.fail(function() {
-    alert( "error: "+error );
-  });*/
 }
 
 function createToken() {
