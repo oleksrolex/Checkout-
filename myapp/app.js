@@ -35,10 +35,10 @@ app.get('/error.html', function (req, res) {
 
 app.post("/charge", (req, res) => {
 	console.log('A post request is made!');
- // let amount = 500;
-   stripe.customers.create({
+    stripe.customers.create({
     email: req.body.stripeEmail,
-    source: req.body.stripeToken
+    source: req.body.stripeToken,
+//	plan: req.body.Plan
 	
   })
 
