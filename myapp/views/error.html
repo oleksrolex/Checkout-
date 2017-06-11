@@ -6,7 +6,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="public/files/style.css">
-
+<script src="https://use.fontawesome.com/c23bc101ed.js"></script>
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
 
@@ -28,43 +28,59 @@
 							</div>
 							<div class="panel-body">
 								<div class="form-group">
-								<div class="productdescription col-sm-8">
-									 <h5><b><span class="fulltimeresearcher">  Full-Time Researcher</span></b> $380</h5>
-									<p>(40h / week, charged weekly; 1st Researcher at $380, all additional Researchers at $280 per week)</p>
-									<br>
-								</div>
-								<div class="quantitysection col-sm-4">
-										<label class="text-uppercase qty"><b>Quantity</b></label>
-										 <br>
-										<input name="fulltime" class="form-control validate" id="package_quantity" value="0" onclick="this.form.reset();">
-										
-									</div>	
-								<div class="form-group">
-								<div class="productdescription col-sm-8">
-									<h5><b><span class="25customleads">  25 Custom Leads</span></b> $5</h5>
+								<div class="productdescription col-sm-8 option1">
+									<h5><b><input type="radio" name="option" value="customleads" class="25customleads"><span class="25customleads">  25 Custom Leads</span></b> $5</h5>
 									<p>one time charge</p>
 									<br>
 								</div>
+						<!--		<div class="quantitysection col-sm-4">
+										<label class="text-uppercase qty"><b>Quantity</b></label>
+										 <br>
+										<input name="customleads" class="form-control validate secondPackage" id="package_quantity2" value="0" onclick="this.form.reset();" >
+										
+									</div>	-->
+								<div class="productdescription col-sm-8 option2">
+									<h5><b><input type="radio" name="option" value="1trialweek" class="trialweek"><span class="trialweek">  1 week Trial</span></b> $380</h5>
+									<p>one time charge</p>
+									<br>
+								</div>
+								<div class="form-group">
+								<div class="productdescription col-sm-8 option3">
+									 <h5><b><input type="radio" name="option" value="Fresearcher" class="fulltimeresearcher"><span class="fulltimeresearcher">  Full-Time Researcher</span></b> $380</h5>
+									<p>(40h / week, charged weekly; 1st Researcher at $380, all additional Researchers at $280 per week)</p>
+									<br>
+								</div>
+								
 									<div class="quantitysection col-sm-4">
 										<label class="text-uppercase qty"><b>Quantity</b></label>
 										<br>
-										<input name="customleads" class="form-control validate secondPackage" id="package_quantity2" value="0" onclick="this.form.reset();" >
+										<input name="fulltime" class="form-control validate" id="package_quantity" value="1" onclick="this.form.reset();">
+										
 										<br>
-										<label class="text-uppercase price"><b>Price per week</b></label> 
+										<label class="text-uppercase price"><b>Price </b></label> 
 										<!-- This field should show the automatically calculated price and shouldn't be editable -->
 										<span name="total" id="totalsum" class="form-control" name="stripeAmount" ></span>
 										<script>
 											$(document).ready(function() {
-											$('.secondPackage').on('keyup', function(){
-												var number = +$(this).val();
-												var amount = 5;
-												var finalprice = number*amount;
+											$('.25customleads').click(function(){
+												var finalprice = 5;
+												 $('#totalsum').text(finalprice);
+											
+											});
+											$('.trialweek').click(function(){
+												var finalprice = 380;
 												 $('#totalsum').text(finalprice);
 												 
 												
 											});
-												$('#package_quantity').on('keyup', function(){
-												
+										
+											$('.fulltimeresearcher').click(function(){
+												var finalprice = 380;
+												 $('#totalsum').text(finalprice);
+											});
+									
+											$('#package_quantity').on('keyup', function(){
+											$("input.fulltimeresearcher").prop("checked", true)
 												var number = +$(this).val();
 												var amount = 280;
 												var finalprice = number*amount;
@@ -78,6 +94,7 @@
 												return $('#totalsum').text(finalprice);
 											});
 											});	
+											
 												
 
 										</script>
@@ -232,6 +249,7 @@ function stripeTokenHandler(token) {
   // Insert the token ID into the form so it gets submitted to the server
   $('.loading').html('<img class="loader" src="public/files/ajax-loader.gif">');
   var fullresearcherlabel = $('.fulltimeresearcher').text();
+  var trialweek = $('.trialweek').text();
   var customleadslabel = $('.25customleads').text();
   var dollar = +$('#totalsum').text();
   var finalAmount = dollar*100;
@@ -244,14 +262,18 @@ function stripeTokenHandler(token) {
     
   hiddenInput.attr('value', token.id);
   hiddenInputAmount.attr('value', finalAmount);
- var zero = $('#package_quantity').val();
-  if (zero == 0){
-   hiddenInputPlan.attr('value',customleadslabel );
-   hiddenInputCount.attr('value',$('#package_quantity2').val() );
+// var zero = $('#package_quantity').val();
+ 
+  if ($('input.trialweek').is(':checked')){
+   hiddenInputPlan.attr('value',trialweek );
+   hiddenInputCount.attr('value',1 );
    
-  } else  {  
+  } else if ($('input.25customleads').is(':checked')){  
+   hiddenInputPlan.attr('value', customleadslabel);
+	hiddenInputCount.attr('value',1 );
+  } else if ($('.fulltimeresearcher').is(':checked')){  
    hiddenInputPlan.attr('value', fullresearcherlabel);
-	hiddenInputCount.attr('value',zero );
+	hiddenInputCount.attr('value',$('#package_quantity').val() );
   }
   
  
