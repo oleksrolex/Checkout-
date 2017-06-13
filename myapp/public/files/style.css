@@ -271,3 +271,64 @@ body .panel-default > .panel-heading {
     border-radius: 4px;
     
 }
+.form-group > h3 {
+  background: #f5f5f5 none repeat scroll 0 0;
+  border: 1px solid #f5f5f5;
+  border-radius: 5px;
+  padding: 5px 15px;
+}
+.receipt .form-group > h3::before, .nextsteps .form-group > h3::before {
+  content: "  ";
+  font-family: FontAwesome;
+}
+.ourguarantee .form-group > h3::before {
+  content: "  ";
+  font-family: FontAwesome;
+}
+.additionallinks .form-group > h3::before {
+  content: "  ";
+  font-family: FontAwesome;
+}
+.errorMessage > p {
+  background: #f44253 none repeat scroll 0 0;
+  border: 3px solid #f7af9b;
+  border-radius: 9px;
+  color: #fff;
+  font-family: "Inconsolata",monospace;
+  font-size: 18px;
+  padding: 7px 9px;
+}
+.errorMessage > p::before {
+  color: #fff;
+  content: '\f00d';
+  font-family: FontAwesome;
+  font-size: 18px;
+  padding-right: 10px;
+}
+.loader {
+  float: left;
+  width: 41px;
+}
+#package_quantity2 {
+  width: 20%;
+}
+#totalsum {
+  width: 50%;
+}
+
+
+@media screen and (min-width: 768px) {
+    #email-address {
+  width: 48%;
+}
+}
+			.text-uppercase.price {
+  font-size: 20px;
+}
+
+input[name="option"]:checked + span , .highlighted{
+  border: 2px solid gray;
+  border-radius: 4px;
+  background: #f5f5f5;
+  padding : 5px ;
+}
