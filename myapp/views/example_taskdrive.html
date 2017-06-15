@@ -28,57 +28,83 @@
 							</div>
 							<div class="panel-body">
 								<div class="form-group">
-								<div class="productdescription col-sm-8 option1">
-									<h5><b><input type="radio" name="option" value="customleads" class="25customleads"><span class="25customleads">  25 Custom Leads</span></b> $5</h5>
-									<p>one time charge</p>
-									<br>
-								</div>
-						<!--		<div class="quantitysection col-sm-4">
-										<label class="text-uppercase qty"><b>Quantity</b></label>
-										 <br>
-										<input name="customleads" class="form-control validate secondPackage" id="package_quantity2" value="0" onclick="this.form.reset();" >
-										
-									</div>	-->
-								<div class="productdescription col-sm-8 option2">
-									<h5><b><input type="radio" name="option" value="1trialweek" class="trialweek"><span class="trialweek">  1 week Trial</span></b> $380</h5>
-									<p>one time charge</p>
-									<br>
-								</div>
-								<div class="form-group">
-								<div class="productdescription col-sm-8 option3">
-									 <h5><b><input type="radio" name="option" value="Fresearcher" class="fulltimeresearcher"><span class="fulltimeresearcher">  Full-Time Researcher</span></b> $380</h5>
-									<p>(40h / week, charged weekly; 1st Researcher at $380, all additional Researchers at $280 per week)</p>
+								<div class="productdescription option1">
+								<div class="col-sm-8">
+									<h5><b><input type="radio" name="option" value="customleads" class="25customleads" required><span class="25customleads">  25 Custom Leads</span></b> $5 - one time charge</h5>
+									
 									<br>
 								</div>
 								
-									<div class="quantitysection col-sm-4">
+								<div class="col-sm-4" >
+								
+								</div>
+								</div>
+								
+								<div class="productdescription option2">
+								<div class="col-sm-8 ">
+									<h5><b><input type="radio" name="option" value="1trialweek" class="trialweek" required><span class="trialweek">  1 week Trial</span></b> $380 - one time charge</h5>
+								</div>
+								
+								<div class="col-sm-4" >
+								
+								</div>
+								</div>
+								
+								
+								<div class="productdescription option3">
+								<div class="col-sm-8 ">
+								<div class="col-sm-8">
+									 <h5><b><input type="radio" name="option" value="Fresearcher" class="fulltimeresearcher" required><span class="fulltimeresearcher">  Full-Time Researcher</span></b><br> $380 - (40h / week, charged weekly; 1st Researcher at $380, all additional Researchers at $280 per week)</h5>
+								</div>
+									<div class="quantitysection col-sm-3">
 										<label class="text-uppercase qty"><b>Quantity</b></label>
 										<br>
-										<input name="fulltime" class="form-control validate" id="package_quantity" value="1" onclick="this.form.reset();">
-										
-										<br>
-										<label class="text-uppercase price"><b>Price </b></label> 
-										<!-- This field should show the automatically calculated price and shouldn't be editable -->
-										<span name="total" id="totalsum" class="form-control" name="stripeAmount" ></span>
+										<input name="fulltime" class="form-control validate" id="package_quantity" value="0" onclick="this.form.reset();">
+								</div>
+								</div>
+								<div class="col-sm-4" >
+								
+								</div>
+								</div>
+								
+								
+									
 										<script>
 											$(document).ready(function() {
+											
 											$('.25customleads').click(function(){
 												var finalprice = 5;
-												 $('#totalsum').text(finalprice);
-											
+												
+												$('.option1 .col-sm-8').removeClass('grayedout');
+												$('.option2 .col-sm-8').addClass('grayedout');
+												$('.option3 .col-sm-8').addClass('grayedout');
+												$('.productdescription .col-sm-4').html(' ');
+												$('.option1 .col-sm-4').html('<label class="text-uppercase price" ><b>Price </b></label><span name="total" id="totalsum" class="form-control" name="stripeAmount" ></span>');
+												$('#totalsum').text(finalprice);
 											});
+											
 											$('.trialweek').click(function(){
 												var finalprice = 380;
-												 $('#totalsum').text(finalprice);
 												 
-												
+												 $('.option1 .col-sm-8').addClass('grayedout');
+												 $('.option2 .col-sm-8').removeClass('grayedout');
+												 $('.option3 .col-sm-8').addClass('grayedout');
+												 $('.productdescription .col-sm-4').html(' ');
+												$('.option2 .col-sm-4').html('<label class="text-uppercase price" ><b>Price </b></label><span name="total" id="totalsum" class="form-control" name="stripeAmount" ></span>');
+												$('#totalsum').text(finalprice);
 											});
 										
 											$('.fulltimeresearcher').click(function(){
-												var finalprice = 380;
-												 $('#totalsum').text(finalprice);
+											//	var finalprice = 380;
+												 
+												 $('.option1 .col-sm-8').addClass('grayedout');
+												 $('.option2 .col-sm-8').addClass('grayedout');
+												 $('.option3 .col-sm-8').removeClass('grayedout');
+												 $('.productdescription .col-sm-4').html(' ');
+												$('.option3 .col-sm-4').html('<label class="text-uppercase price" ><b>Price </b></label><span name="total" id="totalsum" class="form-control" name="stripeAmount" ></span>');
+											//	$('#totalsum').text(finalprice);
 											});
-									
+											
 											$('#package_quantity').on('keyup', function(){
 											$("input.fulltimeresearcher").prop("checked", true)
 												var number = +$(this).val();
@@ -95,11 +121,10 @@
 											});
 											});	
 											
-												
-
+										
 										</script>
-									</div>
-								</div>
+									
+								
 								</div>
 							</div>
 						</div>
@@ -163,6 +188,7 @@
 				<input type="hidden" name="amount" class="amounttoken" value="">
 				<input type="hidden" name="Plan" class="plan" value="">
 				<input type="hidden" name="count" class="count" value="">
+				<input type="hidden" name="subscrp" class="subscrp" value="">
 				
 		</div> 
 		<script src="public/files/form-validator/jquery.form-validator.js"></script> 
@@ -172,6 +198,15 @@
     modules : 'location, date, security, file'
     
   });
+  $( "#payment-form" ).validate({
+  rules: {
+    fields: {
+      required: true
+    }
+
+  }
+});
+
 </script>
 					<!-- footer block -->
 					<div class="row" style="margin:0 10%;">
@@ -244,7 +279,7 @@ cardCvcElement.mount('#card-cvc-element');
 
 function stripeTokenHandler(token) {
   // Insert the token ID into the form so it gets submitted to the server
-  $('.loading').html('<img class="loader" src="public/files/ajax-loader.gif">');
+  
   var fullresearcherlabel = $('.fulltimeresearcher').text();
   var trialweek = $('.trialweek').text();
   var customleadslabel = $('.25customleads').text();
@@ -255,11 +290,12 @@ function stripeTokenHandler(token) {
   var hiddenInputAmount = $(".amounttoken");
   var hiddenInputPlan = $(".plan");
   var hiddenInputCount = $(".count");
+  var hiddenInputSubscr = $(".subscrp");
   
     
   hiddenInput.attr('value', token.id);
   hiddenInputAmount.attr('value', finalAmount);
-// var zero = $('#package_quantity').val();
+
  
   if ($('input.trialweek').is(':checked')){
    hiddenInputPlan.attr('value',trialweek );
@@ -271,6 +307,7 @@ function stripeTokenHandler(token) {
   } else if ($('.fulltimeresearcher').is(':checked')){  
    hiddenInputPlan.attr('value', fullresearcherlabel);
 	hiddenInputCount.attr('value',$('#package_quantity').val() );
+	hiddenInputSubscr.attr('value',"research_1_std" );
   }
   
  
@@ -283,7 +320,7 @@ function stripeTokenHandler(token) {
 	$('body').html(result).fadeIn();
 //	$('#loading').hide();
 	},
-	timeout: 3000,
+	timeout: 5000,
 	error: function(result) {
 	$('body').html(result).fadeIn();
 	$('#loading').hide();
@@ -293,6 +330,7 @@ function stripeTokenHandler(token) {
 }
 
 function createToken() {
+$('.loading').html('<img class="loader" src="public/files/ajax-loader.gif">');
   stripe.createToken(cardNumberElement).then(function(result) {
     if (result.error) {
       // Inform the user if there was an error

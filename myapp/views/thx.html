@@ -10,7 +10,22 @@
 <script src="https://use.fontawesome.com/c23bc101ed.js"></script>
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
+<script>
+var checkplan =  '{{Plan}}';
+$(document).ready(function() {
+var check = {{count}};
 
+var neededplan = "Full-Time Researcher";
+if (check > 1){
+$('.plans').append('s');
+ }
+ 
+ if (checkplan == '  Full-Time Researcher' ){
+ $('.plans').prepend(check + ' x ');
+ }
+});
+
+</script>
 
   </head><div id="main-container" class="container">
 									<img class="logo" src="public/files/logo_medium.png">
@@ -27,14 +42,14 @@
 										<div class="form-group"><h3>Your Receipt</h3>
 										<div class="productdescription col-sm-8">
 											<h5><b>  Plan</b></h5>
-											<p>{{ count }} x  {{ Plan }}</p>
+											<p class="plans">{{ Plan }}</p>
 											<br>
 										</div>
 											<div class="quantitysection col-sm-4">
 																		
-												<label class="text-uppercase" for="package[quantity]" style=" margin-left: 7px;"><b>Price</b></label> <br>
+												<label class="text-uppercase" for="package[quantity]" ><b>Price</b></label> <br>
 												<!-- This field should show the automatically calculated price and shouldn't be editable -->
-												$ {{ price }}
+												${{ price }}
 											</div>
 										</div>
 								</div>		
@@ -66,21 +81,7 @@
 											</div>
 										</div>
 								</div>
-								<div class="panel-body additionallinks">
-										<div class="form-group">
-										<h3>Additional Links & Resources:</h3>
-											<div class="productdescription col-sm-6">
-												<b> Want some Help?</b>
-												<div>Our Specialists can help you setup a complete sales funnel in no time!</div>
-												<div type="button" style="margin-top: 20px;"><a href="mailto:hello@salesfuelapp.com?subject=Request%20Quote" style="color: rgb(255, 255, 255); background-color: rgb(14, 141, 199); border-radius: 2px; padding: 11px;">Request a quote</a></div>
-											</div>
-											<div class="productdescription col-sm-6">
-												<b> Got a question? </b>
-												<div style="height:40px;">Ask us anything</div>
-												<div type="button" style="margin-top: 20px;"><a href="mailto:hello@salesfuelapp.com?subject=Support%20Request" style="color: rgb(255, 255, 255); background-color: rgb(14, 141, 199); border-radius: 2px; padding: 11px;">Request a quote</a></div>
-											</div>
-										</div>
-								</div>
+								
 						</div>
 				</div>
 				
