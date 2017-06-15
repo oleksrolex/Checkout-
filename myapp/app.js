@@ -22,13 +22,13 @@ nunjucks.configure(['views'], {
 stripe.charges.retrieve("ch_1AOzUT4DfuHBrp8zRLL7XvNc", {
   api_key: "sk_test_IsMOESPs3cDfMwnSRIzeLjHK"
 });
-
+app.get('/thx',function(req,res){
+  res.render('/thx');
+});
 app.get('/', function (req, res) {
   res.render('example_taskdrive')
 });
-app.get('/thx.html', function (req, res) {
-  res.render('thx')
-});
+
 app.get('/error.html', function (req, res) {
   res.render('error')
 });
@@ -38,7 +38,7 @@ app.post("/charge", (req, res) => {
     stripe.customers.create({
     email: req.body.stripeEmail,
     source: req.body.stripeToken,
-//	plan: req.body.Plan
+	//plan: req.body.subscrp
 	
   })
 
@@ -51,7 +51,9 @@ app.post("/charge", (req, res) => {
   })})
 
 	.then(function(charge){
-	res.render("thx",{ price: req.body.amount/100, Plan: req.body.Plan, count: req.body.count})})
+	res.render("thx",{ price: req.body.amount/100, Plan: req.body.Plan, count: req.body.count})
+
+	})
 	
 //	.then(function(err){
 //	res.send(err.message)})
