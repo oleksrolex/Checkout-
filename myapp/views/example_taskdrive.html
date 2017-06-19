@@ -248,14 +248,16 @@ var elements = stripe.elements();
 var style = {
   base: {
     iconColor: '#666EE8',
-    color: '#31325F',
+    color: '#555',
     lineHeight: '40px',
     fontWeight: 300,
     fontFamily: 'Lucida Sans Unicode',
     fontSize: '15px',
 	'::placeholder': {
-      color: '#000',
-	  margin: '0 5px',
+     margin: '0 5px',
+	 padding: '6px 12px',
+    fontSize: '14px',
+    color: '#999'
     },
   },
 };
@@ -318,7 +320,6 @@ function stripeTokenHandler(token) {
 	success : function(result){
 	$('form').remove();
 	$('body').html(result).fadeIn();
-//	$('#loading').hide();
 	},
 	timeout: 5000,
 	error: function(result) {
