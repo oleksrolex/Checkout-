@@ -59,7 +59,7 @@
 									<div class="quantitysection col-sm-3">
 										<label class="text-uppercase qty"><b>Quantity</b></label>
 										<br>
-										<input name="fulltime" class="form-control validate" id="package_quantity" value="0" onclick="this.form.reset();">
+										<input name="fulltime" class="form-control validate" id="package_quantity" value="0" >
 								</div>
 								</div>
 								<div class="col-sm-4" >
@@ -189,6 +189,7 @@
 				<input type="hidden" name="Plan" class="plan" value="">
 				<input type="hidden" name="count" class="count" value="">
 				<input type="hidden" name="subscrp" class="subscrp" value="">
+				<input type="hidden" name="AdditSubscrp" class="AdditSubscrp" value="">
 				
 		</div> 
 		<script src="public/files/form-validator/jquery.form-validator.js"></script> 
@@ -293,6 +294,7 @@ function stripeTokenHandler(token) {
   var hiddenInputPlan = $(".plan");
   var hiddenInputCount = $(".count");
   var hiddenInputSubscr = $(".subscrp");
+  var hiddenInputAdditSubscr = $('.AdditSubscrp');
   
     
   hiddenInput.attr('value', token.id);
@@ -309,7 +311,13 @@ function stripeTokenHandler(token) {
   } else if ($('.fulltimeresearcher').is(':checked')){  
    hiddenInputPlan.attr('value', fullresearcherlabel);
 	hiddenInputCount.attr('value',$('#package_quantity').val() );
-	hiddenInputSubscr.attr('value',"research_1_std" );
+		if($('.qty').val() == 1){
+		hiddenInputSubscr.attr('value',"research_1_std" );
+		} else if ($('#package_quantity').val() > 1){
+		hiddenInputSubscr.attr('value',"research_1_std" );
+		hiddenInputAdditSubscr.attr('value',"researcher_2_std");
+		}
+	
   }
   
  

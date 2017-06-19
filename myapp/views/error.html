@@ -59,7 +59,7 @@
 									<div class="quantitysection col-sm-3">
 										<label class="text-uppercase qty"><b>Quantity</b></label>
 										<br>
-										<input name="fulltime" class="form-control validate" id="package_quantity" value="0" onclick="this.form.reset();">
+										<input name="fulltime" class="form-control validate" id="package_quantity" value="0" >
 								</div>
 								</div>
 								<div class="col-sm-4" >
@@ -134,8 +134,7 @@
 				<!--info block-->
 				
 				<div class="row">
-				<div class="col-sm-10">
-				<div class="errorMessage">
+				<div class="col-sm-10"><div class="errorMessage">
 						<p>Oops! {{ error }} </p>
 						</div>
 						<div class="panel panel-default">
@@ -192,6 +191,7 @@
 				<input type="hidden" name="Plan" class="plan" value="">
 				<input type="hidden" name="count" class="count" value="">
 				<input type="hidden" name="subscrp" class="subscrp" value="">
+				<input type="hidden" name="AdditSubscrp" class="AdditSubscrp" value="">
 				
 		</div> 
 		<script src="public/files/form-validator/jquery.form-validator.js"></script> 
@@ -214,7 +214,6 @@ $('.errorMessage p').click(function(){
 $('.errorMessage p').hide();
 });
 });
-
 </script>
 					<!-- footer block -->
 					<div class="row" style="margin:0 10%;">
@@ -256,14 +255,16 @@ var elements = stripe.elements();
 var style = {
   base: {
     iconColor: '#666EE8',
-    color: '#31325F',
+    color: '#555',
     lineHeight: '40px',
     fontWeight: 300,
     fontFamily: 'Lucida Sans Unicode',
     fontSize: '15px',
 	'::placeholder': {
-      color: '#000',
-	  margin: '0 5px',
+     margin: '0 5px',
+	 padding: '6px 12px',
+    fontSize: '14px',
+    color: '#999'
     },
   },
 };
@@ -299,6 +300,7 @@ function stripeTokenHandler(token) {
   var hiddenInputPlan = $(".plan");
   var hiddenInputCount = $(".count");
   var hiddenInputSubscr = $(".subscrp");
+  var hiddenInputAdditSubscr = $('.AdditSubscrp');
   
     
   hiddenInput.attr('value', token.id);
@@ -315,7 +317,13 @@ function stripeTokenHandler(token) {
   } else if ($('.fulltimeresearcher').is(':checked')){  
    hiddenInputPlan.attr('value', fullresearcherlabel);
 	hiddenInputCount.attr('value',$('#package_quantity').val() );
-	hiddenInputSubscr.attr('value',"research_1_std" );
+		if($('.qty').val() == 1){
+		hiddenInputSubscr.attr('value',"research_1_std" );
+		} else if ($('#package_quantity').val() > 1){
+		hiddenInputSubscr.attr('value',"research_1_std" );
+		hiddenInputAdditSubscr.attr('value',"researcher_2_std");
+		}
+	
   }
   
  
@@ -326,7 +334,6 @@ function stripeTokenHandler(token) {
 	success : function(result){
 	$('form').remove();
 	$('body').html(result).fadeIn();
-//	$('#loading').hide();
 	},
 	timeout: 5000,
 	error: function(result) {
