@@ -48,6 +48,8 @@ app.post("/charge", (req, res) => {
 
   .then(function(customer){
 	  if (req.body.subscrp) {
+		  
+		  if (req.body.AdditSubscrp){
 		  return stripe.subscriptions.create({
 			customer: customer.id,
 			items: [
@@ -60,6 +62,12 @@ app.post("/charge", (req, res) => {
 			]
 			
 		  });
+		  } else {
+			  return stripe.subscriptions.create({
+			customer: customer.id,
+			plan: req.body.subscrp
+});
+		  }
 		}
 		  else{
 			  return stripe.charges.create({
