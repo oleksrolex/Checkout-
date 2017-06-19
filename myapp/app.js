@@ -23,7 +23,10 @@ stripe.charges.retrieve("ch_1AOzUT4DfuHBrp8zRLL7XvNc", {
   api_key: "sk_test_IsMOESPs3cDfMwnSRIzeLjHK"
 });
 app.get('/thx',function(req,res){
-  res.render('/thx');
+	var test = req.query.price
+	var test2 = req.query.plan
+	var test3 = req.query.count
+  res.render('thx', {price: test, Plan:test2, count: test3 });
 });
 app.get('/', function (req, res) {
   res.render('example_taskdrive')
@@ -43,15 +46,37 @@ app.post("/charge", (req, res) => {
   })
 
   .then(function(customer){
-   stripe.charges.create({
+	  if (req.body.subscrp) {
+		  return stripe.subscriptions.create({
+			customer: customer.id,
+			plan: req.body.subscrp
+		  });
+		}
+		  else{
+			  return stripe.charges.create({
+				amount: req.body.amount,
+				description: req.body.Plan,
+				currency: "usd",
+				customer: customer.id
+				});
+		  }
+	  
+	  
+ /*  stripe.charges.create({
       amount : req.body.amount,
       description: req.body.Plan,
          currency: "usd",
          customer: customer.id
-  })})
+  })*/})
 
 	.then(function(charge){
-	res.render("thx",{ price: req.body.amount/100, Plan: req.body.Plan, count: req.body.count})
+//	res.render("thx",{ price: req.body.amount/100, Plan: req.body.Plan, count: req.body.count})
+	var price = encodeURIComponent(req.body.amount/100);
+	var Plan = encodeURIComponent(req.body.Plan);
+	var count = encodeURIComponent(req.body.count);
+	
+	res.redirect('/thx/?price='+price+ '&plan='+Plan+'&count='+count)
+       
 
 	})
 	
@@ -68,11 +93,8 @@ app.post('/charge', function (req, res) {
     console.log('you made post request!');
     // connect to stripe
     // ... from stripe documentation: https://stripe.com/docs/checkout/express
-
-
     // IF success - thank you page
     // res.render('thankyou');
-
     // IF failure - display error
   //  res.render('new1', {error: 'this is an error'})
     res.render('thx');
