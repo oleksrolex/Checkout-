@@ -23,9 +23,10 @@ stripe.charges.retrieve("ch_1AOzUT4DfuHBrp8zRLL7XvNc", {
   api_key: "sk_test_IsMOESPs3cDfMwnSRIzeLjHK"
 });
 app.get('/thx',function(req,res){
-	var test = req.query.price
-	var test2 = req.query.plan
-	var test3 = req.query.count
+	var test = req.query.price;
+	var test2 = req.query.plan;
+	var test3 = req.query.count;
+	
   res.render('thx', {price: test, Plan:test2, count: test3 });
 });
 app.get('/', function (req, res) {
@@ -49,7 +50,15 @@ app.post("/charge", (req, res) => {
 	  if (req.body.subscrp) {
 		  return stripe.subscriptions.create({
 			customer: customer.id,
-			plan: req.body.subscrp
+			items: [
+			{plan: req.body.subscrp,
+			},
+			{
+			plan: req.body.AdditSubscrp,
+			quantity: req.body.count-1,
+			},
+			]
+			
 		  });
 		}
 		  else{
@@ -74,9 +83,13 @@ app.post("/charge", (req, res) => {
 	var price = encodeURIComponent(req.body.amount/100);
 	var Plan = encodeURIComponent(req.body.Plan);
 	var count = encodeURIComponent(req.body.count);
+	var AdditPlan= encodeURIComponent(req.body.AdditSubscrp);
 	
+	if (AdditPlan == undefined){	
 	res.redirect('/thx/?price='+price+ '&plan='+Plan+'&count='+count)
-       
+	} else {
+	res.redirect('/thx/?price='+price+ '&plan='+Plan+'&count='+count+'&AdditPlan='+AdditPlan)	
+	}  
 
 	})
 	
