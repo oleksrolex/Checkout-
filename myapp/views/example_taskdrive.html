@@ -311,7 +311,7 @@ function stripeTokenHandler(token) {
   } else if ($('.fulltimeresearcher').is(':checked')){  
    hiddenInputPlan.attr('value', fullresearcherlabel);
 	hiddenInputCount.attr('value',$('#package_quantity').val() );
-		if($('.qty').val() == 1){
+		if($('#package_quantity').val() == 1){
 		hiddenInputSubscr.attr('value',"research_1_std" );
 		} else if ($('#package_quantity').val() > 1){
 		hiddenInputSubscr.attr('value',"research_1_std" );
