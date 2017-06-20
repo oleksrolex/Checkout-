@@ -29,21 +29,24 @@ app.get('/thx',function(req,res){
 	
   res.render('thx', {price: test, Plan:test2, count: test3 });
 });
+
+app.get('/error.html', function (req, res) {
+//	var test4= req.query.errMsg;
+  res.render('error')
+});
+
 app.get('/', function (req, res) {
   res.render('example_taskdrive')
 });
 
-app.get('/error.html', function (req, res) {
-  res.render('error')
-});
+
 
 app.post("/charge", (req, res) => {
 	console.log('A post request is made!');
     stripe.customers.create({
     email: req.body.stripeEmail,
     source: req.body.stripeToken,
-	//plan: req.body.subscrp
-	
+		
   })
 
   .then(function(customer){
@@ -64,9 +67,9 @@ app.post("/charge", (req, res) => {
 		  });
 		  } else {
 			  return stripe.subscriptions.create({
-			customer: customer.id,
-			plan: req.body.subscrp
-});
+				customer: customer.id,
+				plan: req.body.subscrp
+				});
 		  }
 		}
 		  else{
@@ -79,35 +82,24 @@ app.post("/charge", (req, res) => {
 		  }
 	  
 	  
- /*  stripe.charges.create({
-      amount : req.body.amount,
-      description: req.body.Plan,
-         currency: "usd",
-         customer: customer.id
-  })*/})
+	})
 
 	.then(function(charge){
-//	res.render("thx",{ price: req.body.amount/100, Plan: req.body.Plan, count: req.body.count})
 	var price = encodeURIComponent(req.body.amount/100);
 	var Plan = encodeURIComponent(req.body.Plan);
 	var count = encodeURIComponent(req.body.count);
 	var AdditPlan= encodeURIComponent(req.body.AdditSubscrp);
+	res.json({status: "Success", redirect: ('/thx/?price='+price+ '&plan='+Plan+'&count='+count+'&AdditPlan='+AdditPlan)});
 	
-	if (AdditPlan == undefined){	
-	res.redirect('/thx/?price='+price+ '&plan='+Plan+'&count='+count)
-	} else {
-	res.redirect('/thx/?price='+price+ '&plan='+Plan+'&count='+count+'&AdditPlan='+AdditPlan)	
-	}  
-
 	})
 	
-//	.then(function(err){
-//	res.send(err.message)})
 	
 	.catch(function(err) { 
-	res.render('error', { error: err });});
-	
+	res.render('error', { error: err });
+//	var errMsg = encodeURIComponent(err);
+//	res.json({status:"Error", redirect: '/error/?errMsg='+errMsg});
  
+});
 });
 /*
 app.post('/charge', function (req, res) {
