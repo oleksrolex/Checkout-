@@ -215,21 +215,19 @@
 							<div class="row guaranteesection" style="margin:30px 0;">
 								<div class="col-sm-6 guarantee">				
 								<img class="elScreenshot_image_src1 ximg" src="https://nodo.s3.amazonaws.com/assets/images/graphics/seal1.png" width="70px" height="auto">
-								<div class="elScreenshot_text" style="width:70%; float:right;">
+								<div class="elScreenshot_text" >
 								<h3><b>Guarantee</b></h3>
 								No question asked refund guaranteed. If you are unhappy for any reason, get your money back. Rock solid guarantee...
-								<div class="elScreenshot_image elAlign_center">
-								</div>
+								
 								</div>
 								</div>
 								
 								<div class="col-sm-6 securepayment">
 								<img class="elScreenshot_image_src1 ximg" src="https://nodo.s3.amazonaws.com/assets/images/graphics/grey-lock.png" width="70px" height="auto">
-								<div class="elScreenshot_text" style="width:70%; float:right;">
+								<div class="elScreenshot_text">
 								<h3><b>Secure Payment</b></h3>
 								All orders are through a very secure network. Your credit card information is never stored in any way. We respect your privacy...
-								<div class="elScreenshot_image elAlign_center">
-								</div>
+								
 								</div>
 								</div>
 							</div>
@@ -325,10 +323,14 @@ function stripeTokenHandler(token) {
 	$.ajax('/charge',{
 	type: 'POST',
 	data: $('form').serialize(),
-	success : function(result){
-	$('form').remove();
-	$('body').html(result).fadeIn();
-	},
+	success : function(data, status, jqXHR) {
+                if (data.status === "Success") {
+                    window.location = data.redirect
+				} else if (data.status = 'Error'){
+					window.location = data.redirect
+				}	
+			
+					},
 	timeout: 5000,
 	error: function(result) {
 	$('body').html(result).fadeIn();

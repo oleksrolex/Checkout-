@@ -5,7 +5,7 @@
 <title>Checkout</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="public/files/style.css">
+<link rel="stylesheet" href="../public/files/style.css">
 <script src="https://use.fontawesome.com/c23bc101ed.js"></script>
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
@@ -17,7 +17,7 @@
 		<br>
 		<form method="post" action="/charge" class="round form validateForm uniformForm" id="payment-form">
 		<div id="main-container" class="container">
-									<img class="logo" src="public/files/logo_medium.png">
+									<img class="logo" src="../public/files/logo_medium.png">
 								<div class="clearfix"></div>
 				<div class="row">
 				<div class="col-sm-10">
@@ -327,14 +327,19 @@ function stripeTokenHandler(token) {
   }
   
  
+ 
 // Submit the form
 	$.ajax('/charge',{
 	type: 'POST',
 	data: $('form').serialize(),
-	success : function(result){
-	$('form').remove();
-	$('body').html(result).fadeIn();
-	},
+	success : function(data, status, jqXHR) {
+                if (data.status === "Success") {
+                    window.location = data.redirect
+				} else if (data.status = 'Error'){
+					window.location = data.redirect
+				}	
+			
+					},
 	timeout: 5000,
 	error: function(result) {
 	$('body').html(result).fadeIn();
