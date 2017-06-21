@@ -96,8 +96,6 @@ app.post("/charge", (req, res) => {
 	
 	.catch(function(err) { 
 	res.render('error', { error: err });
-//	var errMsg = encodeURIComponent(err);
-//	res.json({status:"Error", redirect: '/error/?errMsg='+errMsg});
  
 });
 });
