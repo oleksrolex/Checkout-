@@ -326,15 +326,17 @@ function stripeTokenHandler(token) {
 	success : function(data, status, jqXHR) {
                 if (data.status === "Success") {
                     window.location = data.redirect
-				} else if (data.status = 'Error'){
-					window.location = data.redirect
+				} else {
+					$('body').hide();
+					$('body').html(data).fadeIn();
 				}	
 			
 					},
 	timeout: 5000,
-	error: function(result) {
-	$('body').html(result).fadeIn();
-	$('#loading').hide();
+	error: function(err) {
+	$('.panel-default').hide();
+	$('.logo').html(err).fadeIn();
+	
 	}
 	}	);
 	
