@@ -27,30 +27,42 @@ $('.plans').append('s');
 
 </script>
 
-  </head><div id="main-container" class="container">
-									<img class="logo" src="../public/files/logo_medium.png">
-								<div class="clearfix"></div>
-				<div class="row">
-				<div class="col-sm-10">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h2>Congratulations - Your Order Is Complete!</h2>
-								<h3>We are now setting up your account, assigning you a Sales Assistant and sending you an email within one business day.</h3>
-							</div>
-						
-								<div class="panel-body receipt">
+  </head>
+<body class="thx"> 
+	<!--header-->
+	<div class="logorow" style="background: #1e252a; ">
+		<img class="logo" src="../public/files/logo.png">
+		 </div>
+	<div class="sub-bannercon col-xs-12 black-bg-2">
+<section class="container">
+<div class="row">
+<div class="subbanner white-color text-center col-xs-12 ">
+<div class="v-align">
+<h1 class="main-heading">Congratulations - Your Order Is Complete!</h1>
+<p>We are now setting up your account, assigning you a Sales Assistant and sending you an email within one business day.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+	<div id="main-container" class="container">
+								<div class="row">
+				<div class="col-sm-12 inner-smallbox inner-smallbox2 col-xs-12 green-shadow2 white-bg no-Margin">
+					<div class="panel-body receipt">
 										<div class="form-group"><h3>Your Receipt</h3>
-										<div class="productdescription col-sm-8">
-											<h5><b>  Plan</b></h5>
-											<p class="plans">{{ Plan }}</p>
+											<div class="extraflex">
+										<div class="plandescription">
+											<label>  Plan</label>
 											<br>
+											<p class="dynamic">{{ Plan }}</p>
+											
 										</div>
-											<div class="quantitysection col-sm-4">
-																		
-												<label class="text-uppercase" for="package[quantity]" ><h5><b>Price</b></h5></label> <br>
-												<!-- This field should show the automatically calculated price and shouldn't be editable -->
-												${{ price }}
+											<div class="quantitysection">
+												<label>  Price</label>
+											<br>
+											<p class="dynamic">${{ price }}</p>
 											</div>
+										</div>
 										</div>
 								</div>		
 								<div class="panel-body nextsteps">
@@ -71,7 +83,7 @@ $('.plans').append('s');
 										<div class="form-group">
 										<h3>Our Guarantee:</h3>
 											<div class="productdescription col-sm-4">
-												<img src="https://nodo.s3.amazonaws.com/assets/images/graphics/seal1.png" class="elScreenshot_image_src1 ximg" width="auto" height="auto">
+												<img src="../public/files/gurantee-image.png" class="elScreenshot_image_src1 ximg" width="auto" height="auto">
 											</div>
 											<div class="quantitysection col-sm-8">
 												<h3 class="ne elScreenshot_text_headline ssHeadlineSize2" contenteditable="false">
@@ -88,6 +100,6 @@ $('.plans').append('s');
 
 				</div>
 </div>
-<div style="text-align: center; font-size:17px; font-weight: bold; margin:50px 0;">Copyright © 2017 · <a id="link-2299-423" class="" href="mailto:hello@taskdrive.com" target="_parent">hello@taskdrive.com</a>· Made with ♡ in San Francisco & Spain</div>
+<div style="text-align: center; font-size:17px; font-weight: bold; padding-bottom:30px;" class="black-bg-2 white-color copyright text-center col-xs-12">Copyright © 2017 · <a id="link-2299-423" class="" href="mailto:hello@taskdrive.com" target="_parent">hello@taskdrive.com</a>· Made with ♡ in San Francisco & Spain</div>
 					
 </body></html>

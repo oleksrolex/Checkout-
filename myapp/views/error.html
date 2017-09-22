@@ -6,64 +6,100 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="public/files/style.css">
-<script src="https://use.fontawesome.com/c23bc101ed.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet"> 
+
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
 
 
 
-  </head>
+</head>
+<header class="header black-bg-1 col-xs-12">
+<nav class="navbar navbar-default">
+
+
+<a class="navbar-brand" href="https://taskdrive.com/">
+<img src="https://taskdrive.com/wp-content/themes/AKD/assets/images/logo.png" alt="">
+</a>
+<ul id = "menu" class="nav medium-font pull-right navbar-nav">
+	<li class="menu-item"><a href="https://taskdrive.com/">Home</a></li>
+	<li class="menu-item"><a href="https://taskdrive.com/how-it-works">How it works</a></li>
+	<li class="menu-item"><a href="https://taskdrive.com/priving">Pricing</a></li>
+	<li class="menu-item"><a href="https://taskdrive.com/Contact us">Contact us</a></li>
+	</ul>
+
+</nav>
+</header>
   	<body>
-		<br>
-		<form method="post" action="/charge" class="round form validateForm uniformForm" id="payment-form">
-		<div id="main-container" class="container">
-									<img class="logo" src="public/files/logo_medium.png">
-								<div class="clearfix"></div>
+			<div class="sub-bannercon col-xs-12 black-bg-2">
+<section class="container">
+<div class="row">
+<div class="subbanner white-color text-center col-xs-12 ">
+<div class="v-align">
+<h1 class="main-heading">Select a Product or Plan</h1>
+<p>And let our Sales Assistants find leads for you!</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+		<!-- form -->
+		<form method="post" action="/charge" class="round form validateForm uniformForm checkout-form" id="payment-form">
+		<div id="main-container" class="container ">
+							
 				<div class="row">
-				<div class="col-sm-10">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h2>Select a Product or Plan</h2>
-								<h3>And let our Sales Assistants find leads for you!</h3>
+				<div class="col-sm-12 inner-smallbox inner-smallbox2 col-xs-12 green-shadow2 white-bg no-Margin">
+					<div class="errorMessage">
+						<p>Oops! {{ error }} </p>
+						</div>
+						<div class="panel1">
+							<div class="testit">
+							<div class="column1">
+							<label>Product / Plan</label>
 							</div>
+						<div class="column2">
+							<label>Price</label>
+							</div>
+						</div>
 							<div class="panel-body">
 								<div class="form-group">
 								<div class="productdescription option1">
-								<div class="col-sm-8">
-									<h5><b><input type="radio" name="option" value="customleads" class="25customleads" required><span class="25customleads">  25 Custom Leads</span></b> $5 - one time charge</h5>
+								<div class="column1 blue-bg">
+									<h5><b><input type="radio" name="option" value="customleads" class="25customleads" required><span class="25customleads">  25 Custom Leads</span></b> $5, one time charge</h5>
 									
 									<br>
 								</div>
 								
-								<div class="col-sm-4" >
+								<div class="column2 green-bg" >
 								
 								</div>
 								</div>
 								
 								<div class="productdescription option2">
-								<div class="col-sm-8 ">
-									<h5><b><input type="radio" name="option" value="1trialweek" class="trialweek" required><span class="trialweek">  1 week Trial</span></b> $380 - one time charge</h5>
+								<div class="column1 blue-bg">
+									<h5><b><input type="radio" name="option" value="1trialweek" class="trialweek" required><span class="trialweek">  1 week Trial</span></b> $380, one time charge</h5>
 								</div>
 								
-								<div class="col-sm-4" >
+								<div class="column2 green-bg" >
 								
 								</div>
 								</div>
 								
 								
 								<div class="productdescription option3">
-								<div class="col-sm-8 ">
-								<div class="col-sm-8">
-									 <h5><b><input type="radio" name="option" value="Fresearcher" class="fulltimeresearcher" required><span class="fulltimeresearcher">  Full-Time Researcher</span></b><br> $380 - (40h / week, charged weekly; 1st Researcher at $380, all additional Researchers at $280 per week)</h5>
-								</div>
-									<div class="quantitysection col-sm-3">
-										<label class="text-uppercase qty"><b>Quantity</b></label>
-										<br>
-										<input name="fulltime" class="form-control validate" id="package_quantity" value="0" >
-								</div>
-								</div>
-								<div class="col-sm-4" >
 								
+								<div class="column1 blue-bg">
+									 <h5><b><input type="radio" name="option" value="Fresearcher" class="fulltimeresearcher" required><span class="fulltimeresearcher">  Full-Time Researcher</span></b> $380, <br> (40h / week, charged weekly; 1st Researcher at $380, all additional Researchers at $280 per week)</h5>
+								</div>
+									
+								
+								<div class="column2 green-bg" >
+								<div class="quantitysection col-sm-3">
+									<label class="text-uppercase qty"><b>Quantity</b></label>
+									<input name="fulltime" class="form-control validate" id="package_quantity" value="0" placeholder="0" >
+								</div>
+								<label class="text-uppercase price" ></label><span class="form-control">$</span><span name="total" id="totalsum" class="form-control" name="stripeAmount" ></span>
 								</div>
 								</div>
 								
@@ -71,38 +107,47 @@
 									
 										<script>
 											$(document).ready(function() {
+												
 											
 											$('.25customleads').click(function(){
 												var finalprice = 5;
-												
-												$('.option1 .col-sm-8').removeClass('grayedout');
-												$('.option2 .col-sm-8').addClass('grayedout');
-												$('.option3 .col-sm-8').addClass('grayedout');
-												$('.productdescription .col-sm-4').html(' ');
-												$('.option1 .col-sm-4').html('<label class="text-uppercase price" ><b>Price </b></label><span name="total" id="totalsum" class="form-control" name="stripeAmount" ></span>');
+												$('.option1 .column1').removeClass('grayedout');
+												$('.option1 .column2').removeClass('grayedout');
+												$('.option2 .column1').addClass('grayedout');
+												$('.option2 .column2').addClass('grayedout');
+												$('.option3 .column1').addClass('grayedout');
+												$('.option3 .column2').addClass('grayedout');
+												$('.option2 .column2').html(' ');
+												$('.option1 .column2').html('<label class="text-uppercase price" ></label><span class="form-control">$</span><span name="total" id="totalsum" class="form-control" name="stripeAmount" ></span>');
 												$('#totalsum').text(finalprice);
 											});
 											
 											$('.trialweek').click(function(){
 												var finalprice = 380;
 												 
-												 $('.option1 .col-sm-8').addClass('grayedout');
-												 $('.option2 .col-sm-8').removeClass('grayedout');
-												 $('.option3 .col-sm-8').addClass('grayedout');
-												 $('.productdescription .col-sm-4').html(' ');
-												$('.option2 .col-sm-4').html('<label class="text-uppercase price" ><b>Price </b></label><span name="total" id="totalsum" class="form-control" name="stripeAmount" ></span>');
+												 $('.option1 .column1').addClass('grayedout');
+													$('.option1 .column2').addClass('grayedout');
+												 $('.option2 .column1').removeClass('grayedout');
+													$('.option2 .column2').removeClass('grayedout');
+												 $('.option3 .column1').addClass('grayedout');
+													$('.option3 .column2').addClass('grayedout');
+												 $('.option1 .column2').html(' ');
+												$('.option2 .column2').html('<label class="text-uppercase price" ></label><span class="form-control">$</span><span name="total" id="totalsum" class="form-control" name="stripeAmount" ></span>');
 												$('#totalsum').text(finalprice);
 											});
 										
 											$('.fulltimeresearcher').click(function(){
-											//	var finalprice = 380;
-												 
-												 $('.option1 .col-sm-8').addClass('grayedout');
-												 $('.option2 .col-sm-8').addClass('grayedout');
-												 $('.option3 .col-sm-8').removeClass('grayedout');
-												 $('.productdescription .col-sm-4').html(' ');
-												$('.option3 .col-sm-4').html('<label class="text-uppercase price" ><b>Price </b></label><span name="total" id="totalsum" class="form-control" name="stripeAmount" ></span>');
-											//	$('#totalsum').text(finalprice);
+												$('.option1 .column1').addClass('grayedout');
+												$('.option1 .column2').addClass('grayedout');
+												$('.option2 .column1').addClass('grayedout');
+											  $('.option2 .column2').addClass('grayedout');
+												$('.option3 .column1').removeClass('grayedout');
+												$('.option3 .column2').removeClass('grayedout');
+												$('.option1 .column2').html(' ');
+												$('.option2 .column2').html(' ');
+											//	$('.option3 .column2').prepend('<div class="quantitysection col-sm-3"><label class="text-uppercase qty"><b>Quantity</b></label><input name="fulltime" class="form-control validate" id="package_quantity" value="0" ></div>');
+											//	$('.option3 .column2').append('<label class="text-uppercase price" ></label><span name="total" id="totalsum" class="form-control" name="stripeAmount" ></span>');
+											
 											});
 											
 											$('#package_quantity').on('keyup', function(){
@@ -128,40 +173,28 @@
 								</div>
 							</div>
 						</div>
-				</div>
-				</div>
-				
-				<!--info block-->
-				
-				<div class="row">
-				<div class="col-sm-10">
-				<div class="errorMessage">
-						<p>Oops! {{ error }} </p>
-						</div>
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">Your Information</h3>
-							</div>
+						<div class="panel2">
+							
 						<div class="panel-body">
 							<div class="form-group">
-									<label class="text-uppercase" for="email">Your Email</label>
+									<label class="text-uppercase" for="email">Email:</label>
 									<input type="text" class="form-control" name="stripeEmail" id="email-address" placeholder="Email Address" data-validation="email">
 									
 							</div>
 							<div class="paymethod">
 								<div class="row">
-									<div class="col-xs-12 col-md-6">
-										<label class="text-uppercase" for="number">Your Card Number</label>
+									<div class="col-xs-12 col-md-8">
+										<label class="text-uppercase" for="number">Credit Card Number:</label>
 										<div id="card-number-element" class="field"></div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-xs-12 col-md-4">
-										<label class="text-uppercase" for="date">Expiry Date</label>
+										<label class="text-uppercase" for="date">Expiry Date:</label>
 											<div id="card-expiry-element" class="field"></div>
 									</div>
 									<div class="col-xs-12 col-md-3">
-										<label class="text-uppercase" for="cvv">CVV</label>
+										<label class="text-uppercase" for="cvv">CVV:</label>
 											 <div id="card-cvc-element" class="field"></div>
 									</div>		 
 								</div>
@@ -169,24 +202,33 @@
 								
 								
 							</div>
+				</div>
+				
+				
+				<!--info block-->
+				
+				<div class="row">
+				<div class="col-sm-10">
+							
 						</div>
 						</div> 
-				</div>	
+				
 				
 				
 					
 				<!-- order button -->
-				<div class="row"><div class="col-sm-4"></div>
+				<div class="row"><button type="submit" class="btn btn-success btn-lg btn-block green-btn text-uppercase" id="submit">ORDER NOW</button>
+										<div id="card-errors" class="payment-errors" role="alert"></div><div class="col-sm-4"></div>
 									<div class="col-sm-4">
 										<!-- <button type="submit" class="text-uppercase btn btn-primary" tabindex="3" onclick="return _chargeover_process();">Sign Up Now</button> -->
-										<button type="submit" class="btn btn-success btn-lg btn-block" id="submit">Order Now</button>
-										<div id="card-errors" class="payment-errors" role="alert"></div>
-										<p><img class="elIMG ximg" src="https://nodo.s3.amazonaws.com/assets/images/graphics/credit-only.png" width="100%" style="margin-top:20px;"> </p>
+										
+										<p><img class="elIMG ximg" src="public/files/cards-image.png" width="100%" style="margin-top:20px;"> </p>
 									</div>
 									<div class="col-sm-2 loading">
 									
 									</div>
 				</div>
+				</div>	
 				<input type="hidden" name="stripeToken" class="token">
 				<input type="hidden" name="amount" class="amounttoken" value="">
 				<input type="hidden" name="Plan" class="plan" value="">
@@ -195,6 +237,7 @@
 				<input type="hidden" name="AdditSubscrp" class="AdditSubscrp" value="">
 				
 		</div> 
+			</div>
 		<script src="public/files/form-validator/jquery.form-validator.js"></script> 
 <script src="public/files/form-validator/security.js"></script> 
 <script>
@@ -210,41 +253,41 @@
 
   }
 });
-$(document).ready(function() {
-$('.errorMessage p').click(function(){
-$('.errorMessage p').hide();
-});
-});
 
 </script>
 					<!-- footer block -->
-					<div class="row" style="margin:0 10%;">
-						<div class="col-sm-12">
-							<div class="row guaranteesection" style="margin:30px 0;">
-								<div class="col-sm-6 guarantee">				
-								<img class="elScreenshot_image_src1 ximg" src="https://nodo.s3.amazonaws.com/assets/images/graphics/seal1.png" width="70px" height="auto">
+					<div class="row bottomsection" style="background: #fff;">
+						<div class="">
+							<div class="row guaranteesection" style="margin: 30px 13%;">
+								<div class=" guarantee">	
+									<div class="extraflex">  			
+								<img class="elScreenshot_image_src1 ximg" src="public/files/gurantee-image.png" width="110px" height="auto">
+								</div>
 								<div class="elScreenshot_text" >
-								<h3><b>Guarantee</b></h3>
+								<h3 class="semibold-font black-color"><b>Guarantee</b></h3>
 								No question asked refund guaranteed. If you are unhappy for any reason, get your money back. Rock solid guarantee...
 								
 								</div>
 								</div>
 								
-								<div class="col-sm-6 securepayment">
-								<img class="elScreenshot_image_src1 ximg" src="https://nodo.s3.amazonaws.com/assets/images/graphics/grey-lock.png" width="70px" height="auto">
+								<div class=" securepayment">
+									<div class="extraflex"> 
+								<img class="elScreenshot_image_src1 ximg" src="public/files/payment-image.png" width="auto" height="145px">
+								</div>
 								<div class="elScreenshot_text">
-								<h3><b>Secure Payment</b></h3>
+								<h3 class="semibold-font black-color"><b>Secure Payment</b></h3>
 								All orders are through a very secure network. Your credit card information is never stored in any way. We respect your privacy...
 								
+								
 								</div>
-								</div>
+							</div>
 							</div>
 						</div>
 				
 					</div>
 		</form>
 
-	<div style="text-align: center; font-size:17px; font-weight: bold; margin-bottom:50px;">Copyright © 2017 · <a id="link-2299-423" class="" href="mailto:hello@taskdrive.com" target="_parent">hello@taskdrive.com</a>· Made with ♡ in San Francisco & Spain</div>
+	<div style="text-align: center; font-size:17px; font-weight: bold; padding-bottom:30px;" class="black-bg-2 white-color copyright text-center col-xs-12">Copyright © 2017 · <a id="link-2299-423" class="" href="mailto:hello@taskdrive.com" target="_parent">hello@taskdrive.com</a>· Made with ♡ in San Francisco & Spain</div>
 
 	<script>
 
@@ -256,14 +299,15 @@ var style = {
   base: {
     iconColor: '#666EE8',
     color: '#555',
-    lineHeight: '40px',
-    fontWeight: 300,
-    fontFamily: 'Lucida Sans Unicode',
-    fontSize: '15px',
+    lineHeight: '45px',
+    fontWeight: 100,
+    fontFamily: '"Poppins",sans-serif',
+		fontSize: '16px',
+		borderRadius: '0',
 	'::placeholder': {
      margin: '0 5px',
 	 padding: '6px 12px',
-    fontSize: '14px',
+    fontSize: '16px',
     color: '#999'
     },
   },
