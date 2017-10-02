@@ -1277,14 +1277,55 @@ margin-bottom: 7%;
   display: flex;
   justify-content: center;
 }
+#mobilearrow{
+    display: none;
+}
 @media screen and ( max-width : 675px){
+    /*
 .option3 .column1, .option3 .column2 {
     height: 243px;
 }
+*/
+.hideformobile {
+    display: none;
+    background: #0e8dc7;
+    position: relative;
+    z-index: 999;
+}
+.option3 #mobilearrow{
+    display: block;
+    }
+#mobilearrow img {
+    width: 20px;
+
+}
+.productdescription h5{
+    font-size: 12px;
+}
+.option3 .green-bg .form-control {
+    font-size: 17px;
+}
+}
+@media screen and ( max-width : 368px){
+.option3 #mobilearrow {
+  margin: -24px 0 0 50px;
+}
+
+}
+
+.grayedout #mobilearrow {
+    height: 17px;
+}
+.grayedout .hideformobile{
+    background: #777;
 }
 .plandescription, .quantitysection {
   flex-basis: 50%;
 }
 body.thx {
   color: #000;
+}
+#package_quantity.form-control.validate {
+  border: 1px solid #fff;
+  text-align: center;
 }
