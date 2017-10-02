@@ -86,7 +86,7 @@
 								<div class="productdescription option3">
 								
 								<div class="column1 blue-bg">
-									 <h5><b><input type="radio" name="option" value="Fresearcher" class="fulltimeresearcher" required><span class="fulltimeresearcher">  Full-Time Researcher</span></b> $380, <br> (40h / week, charged weekly; 1st Researcher at $380, all additional Researchers at $280 per week)</h5>
+									 <h5><b><input type="radio" name="option" value="Fresearcher" class="fulltimeresearcher" required><span class="fulltimeresearcher">  Full-Time Researcher</span></b> $380, <br><span id="mobilearrow"><img src="public/files/downarrow.png"></span><div class="hideformobile"> (40h / week, charged weekly; 1st Researcher at $380, all additional Researchers at $280 per week)</div></h5>
 								</div>
 									
 								
@@ -103,6 +103,11 @@
 									
 										<script>
 											$(document).ready(function() {
+												$('#mobilearrow').click(function(){
+													$('.hideformobile').slideToggle( "slow", function() {
+														// Animation complete.
+													});
+												});
 												
 											
 											$('.25customleads').click(function(){
